@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тихий Улей — семейная пасека в предгорьях Алтая</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --dark:#1B1108;
+    --dark2:#26160B;
+    --comb:#3D2410;
+    --comb-line: rgba(232,169,58,.14);
+    --amber:#E8A93A;
+    --amber-deep:#C97A1E;
+    --amber-light:#F4CD79;
+    --cream:#FBF1DD;
+    --cream-dim:#D9C6A3;
+    --ink:#14100A;
+    --radius:18px;
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--dark);
+    color:var(--cream);
+    font-family:'Manrope',sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    margin:0;
+    color:var(--cream);
+  }
+  .mono{ font-family:'JetBrains Mono',monospace; letter-spacing:.02em;}
+  a{ color:inherit; }
+  img,svg{ display:block; max-width:100%; }
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 28px; }
+  section{ position:relative; }
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--amber-light);
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:20px; height:1px;
+    background:var(--amber);
+    display:inline-block;
+  }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:14px 26px;
+    border-radius:999px;
+    font-family:'Manrope',sans-serif;
+    font-weight:700;
+    font-size:15px;
+    text-decoration:none;
+    cursor:pointer;
+    border:1px solid transparent;
+    transition:transform .25s ease, box-shadow .25s ease, background .25s ease;
+  }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn-primary{
+    background:linear-gradient(135deg,var(--amber-light),var(--amber-deep));
+    color:var(--ink);
+    box-shadow:0 8px 24px rgba(201,122,30,.28);
+  }
+  .btn-primary:hover{ box-shadow:0 12px 30px rgba(201,122,30,.4); }
+  .btn-ghost{
+    background:transparent;
+    color:var(--cream);
+    border-color:rgba(251,241,221,.28);
+  }
+  .btn-ghost:hover{ border-color:var(--amber-light); background:rgba(232,169,58,.08); }
+  .btn:focus-visible, a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible{
+    outline:2px solid var(--amber-light);
+    outline-offset:3px;
+  }
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(27,17,8,.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(232,169,58,.14);
+  }
+  .nav-inner{
+    max-width:var(--maxw); margin:0 auto; padding:16px 28px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; }
+  .logo span{ font-family:'Fraunces',serif; font-weight:700; font-size:19px; color:var(--cream); }
+  .logo small{ display:block; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.12em; color:var(--cream-dim); text-transform:uppercase; }
+  .nav-links{ display:flex; gap:30px; list-style:none; margin:0; padding:0; font-size:14.5px; font-weight:600; }
+  .nav-links a{ text-decoration:none; opacity:.82; transition:opacity .2s; }
+  .nav-links a:hover{ opacity:1; color:var(--amber-light); }
+  .nav-cta{ display:flex; align-items:center; gap:18px; }
+  .burger{ display:none; background:none; border:none; color:var(--cream); cursor:pointer; padding:6px; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:96px 0 70px;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse 900px 500px at 82% -10%, rgba(232,169,58,.16), transparent 60%),
+      var(--dark);
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.15fr .85fr;
+    gap:50px;
+    align-items:center;
+  }
+  .hero h1{
+    font-size:clamp(2.4rem, 4.4vw, 3.6rem);
+    line-height:1.08;
+    letter-spacing:-.01em;
+    margin:18px 0 22px;
+  }
+  .hero h1 em{
+    font-style:normal;
+    background:linear-gradient(100deg,var(--amber-light),var(--amber));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero p.lead{
+    font-size:17.5px; color:var(--cream-dim); max-width:46ch; margin-bottom:32px;
+  }
+  .hero-actions{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom:44px; }
+  .hero-stats{
+    display:flex; gap:0; border-top:1px solid var(--comb-line); padding-top:20px;
+  }
+  .hero-stats div{ padding-right:34px; margin-right:34px; border-right:1px solid var(--comb-line); }
+  .hero-stats div:last-child{ border-right:none; margin-right:0; padding-right:0; }
+  .hero-stats b{ display:block; font-family:'Fraunces',serif; font-size:26px; color:var(--amber-light); }
+  .hero-stats span{ font-size:12.5px; color:var(--cream-dim); font-family:'JetBrains Mono',monospace; }
+
+  .hero-visual{ position:relative; height:440px; }
+  .comb-field{
+    position:absolute; inset:0;
+    display:grid; grid-template-columns:repeat(4,1fr); gap:6px;
+    transform:rotate(2deg) scale(1.06);
+  }
+  .comb-cell{
+    aspect-ratio:.866;
+    clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+    background:linear-gradient(160deg, var(--comb), var(--dark2));
+    border:1px solid var(--comb-line);
+  }
+  .comb-cell.lit{ background:linear-gradient(160deg,var(--amber-deep),var(--comb)); }
+  .comb-field div:nth-child(2n){ margin-top:24px; }
+
+  .honey-drip{ position:absolute; top:-12px; right:14%; width:26px; }
+  .honey-drop{ animation: drip 3.4s ease-in-out infinite; transform-origin:top center; }
+  @keyframes drip{
+    0%{ transform:translateY(0) scaleY(1); opacity:.95; }
+    55%{ transform:translateY(340px) scaleY(1.25); opacity:.95; }
+    62%{ transform:translateY(348px) scaleY(.6); opacity:0; }
+    63%{ transform:translateY(-6px) scaleY(.4); opacity:0; }
+    75%{ transform:translateY(-6px) scaleY(1); opacity:.95; }
+    100%{ transform:translateY(0) scaleY(1); opacity:.95; }
+  }
+  .bee{ position:absolute; width:34px; offset-path: path('M10,380 C 90,300 60,200 150,170 S 300,120 330,40'); animation: fly 9s ease-in-out infinite; }
+  @keyframes fly{
+    0%{ offset-distance:0%; }
+    45%{ offset-distance:100%; }
+    50%{ offset-distance:100%; }
+    95%{ offset-distance:0%; }
+    100%{ offset-distance:0%; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .honey-drop, .bee{ animation:none !important; }
+  }
+
+  /* ---------- SECTION HEADS ---------- */
+  .sec-head{ max-width:640px; margin-bottom:48px; }
+  .sec-head h2{ font-size:clamp(1.8rem,3vw,2.5rem); margin-top:14px; }
+  .sec-head p{ color:var(--cream-dim); margin-top:14px; font-size:16px; }
+
+  /* ---------- ABOUT ---------- */
+  .about{ padding:110px 0; border-top:1px solid var(--comb-line); }
+  .about-grid{ display:grid; grid-template-columns:.9fr 1.1fr; gap:64px; align-items:center; }
+  .about-art{
+    aspect-ratio:1/1.05;
+    border-radius:var(--radius);
+    background:
+      repeating-linear-gradient(120deg, rgba(232,169,58,.09) 0 2px, transparent 2px 26px),
+      linear-gradient(160deg,var(--comb),var(--dark2));
+    border:1px solid var(--comb-line);
+    position:relative;
+    overflow:hidden;
+    display:flex; align-items:flex-end; padding:26px;
+  }
+  .about-art .tag{
+    font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--amber-light);
+    background:rgba(27,17,8,.55); border:1px solid var(--comb-line); padding:8px 12px; border-radius:999px;
+  }
+  .about-text h2{ font-size:clamp(1.7rem,2.6vw,2.3rem); margin:14px 0 20px; line-height:1.2; }
+  .about-text p{ color:var(--cream-dim); margin-bottom:16px; font-size:16px; }
+  .about-facts{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:28px; }
+  .about-facts div{ border-left:2px solid var(--amber); padding-left:14px; }
+  .about-facts b{ display:block; font-family:'Fraunces',serif; color:var(--cream); font-size:16px; margin-bottom:2px;}
+  .about-facts span{ font-size:13.5px; color:var(--cream-dim); }
+
+  /* ---------- PRODUCTS ---------- */
+  .products{ padding:110px 0; border-top:1px solid var(--comb-line); background:var(--dark2); }
+  .hive-grid{
+    display:flex; flex-wrap:wrap; gap:22px; justify-content:center;
+  }
+  .jar{
+    width:280px;
+    background:linear-gradient(165deg, rgba(232,169,58,.07), transparent 60%), var(--dark);
+    border:1px solid var(--comb-line);
+    border-radius:16px;
+    padding:26px 22px 24px;
+    transition:transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+  }
+  .jar:hover{ transform:translateY(-6px); border-color:rgba(232,169,58,.5); box-shadow:0 18px 40px rgba(0,0,0,.35); }
+  .jar-top{ display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px; }
+  .jar-swatch{
+    width:44px; height:52px; border-radius:6px 6px 10px 10px;
+    box-shadow:inset 0 -6px 10px rgba(0,0,0,.18);
+  }
+  .jar h3{ font-size:19px; margin-bottom:6px; }
+  .jar .note{ color:var(--cream-dim); font-size:14px; margin-bottom:18px; min-height:42px; }
+  .jar-price{ display:flex; justify-content:space-between; align-items:baseline; border-top:1px dashed var(--comb-line); padding-top:14px; }
+  .jar-price b{ font-family:'JetBrains Mono',monospace; font-size:17px; color:var(--amber-light); }
+  .jar-price span{ font-size:12.5px; color:var(--cream-dim); }
+
+  /* ---------- CYCLE ---------- */
+  .cycle{ padding:110px 0; border-top:1px solid var(--comb-line); }
+  .cycle-track{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:0;
+    border-top:1px solid var(--comb-line);
+    border-bottom:1px solid var(--comb-line);
+  }
+  .cycle-stage{
+    padding:28px 24px;
+    border-right:1px solid var(--comb-line);
+  }
+  .cycle-stage:last-child{ border-right:none; }
+  .cycle-stage .when{ font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--amber-light); text-transform:uppercase; letter-spacing:.08em; }
+  .cycle-stage h3{ font-size:19px; margin:10px 0 10px; }
+  .cycle-stage p{ font-size:14.5px; color:var(--cream-dim); }
+
+  /* ---------- REVIEWS ---------- */
+  .reviews{ padding:110px 0; border-top:1px solid var(--comb-line); background:var(--dark2); }
+  .review-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+  .review{
+    background:var(--dark); border:1px solid var(--comb-line); border-radius:16px; padding:26px;
+  }
+  .review p{ font-size:15px; color:var(--cream-dim); margin-bottom:18px; }
+  .review .who{ font-family:'Fraunces',serif; font-size:15px; color:var(--cream); }
+  .review .where{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--cream-dim); }
+
+  /* ---------- ORDER ---------- */
+  .order{ padding:110px 0; border-top:1px solid var(--comb-line); }
+  .order-grid{ display:grid; grid-template-columns:.9fr 1.1fr; gap:60px; }
+  .delivery-list{ list-style:none; margin:24px 0 0; padding:0; display:flex; flex-direction:column; gap:16px; }
+  .delivery-list li{ display:flex; gap:14px; font-size:15px; color:var(--cream-dim); }
+  .delivery-list b{ color:var(--cream); }
+  form{ display:flex; flex-direction:column; gap:16px; }
+  .form-row{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  label{ font-size:13px; color:var(--cream-dim); margin-bottom:6px; display:block; }
+  input, select, textarea{
+    width:100%; background:var(--dark2); border:1px solid var(--comb-line);
+    color:var(--cream); border-radius:10px; padding:12px 14px; font-family:'Manrope',sans-serif; font-size:15px;
+  }
+  textarea{ resize:vertical; min-height:90px; }
+  .form-msg{ font-size:14px; color:var(--amber-light); min-height:20px; }
+
+  /* ---------- FOOTER ---------- */
+  footer{ padding:60px 0 34px; border-top:1px solid var(--comb-line); }
+  .foot-grid{ display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:40px; margin-bottom:40px; }
+  footer h4{ font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--amber-light); margin-bottom:14px; }
+  footer p, footer a{ font-size:14.5px; color:var(--cream-dim); text-decoration:none; }
+  footer .flinks{ display:flex; flex-direction:column; gap:10px; }
+  .foot-bottom{ display:flex; justify-content:space-between; border-top:1px solid var(--comb-line); padding-top:22px; font-size:13px; color:var(--cream-dim); flex-wrap:wrap; gap:10px; }
+
+  /* reveal */
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+  @media (prefers-reduced-motion: reduce){ .reveal{ opacity:1; transform:none; transition:none; } }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    .nav-links, .nav-cta .btn-ghost{ display:none; }
+    .burger{ display:block; }
+    .hero-grid, .about-grid, .order-grid{ grid-template-columns:1fr; }
+    .hero-visual{ height:280px; order:-1; }
+    .foot-grid{ grid-template-columns:1fr; gap:26px; }
+    .cycle-track{ grid-template-columns:1fr 1fr; }
+    .cycle-stage{ border-bottom:1px solid var(--comb-line); }
+    .review-grid{ grid-template-columns:1fr; }
+    .form-row{ grid-template-columns:1fr; }
+    .hero-stats{ flex-wrap:wrap; row-gap:16px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="logo" href="#top">
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M15 3 22 7.5v9L15 21l-7-4.5v-9L15 3Z" stroke="#E8A93A" stroke-width="1.6"/><path d="M15 9c-2.6 0-4 1.7-4 4s1.4 4 4 4 4-1.7 4-4-1.4-4-4-4Z" fill="#E8A93A"/></svg>
+      <span>Тихий Улей<small>Пасека · Алтайский край</small></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">О пасеке</a></li>
+      <li><a href="#honey">Мёд</a></li>
+      <li><a href="#process">Как мы работаем</a></li>
+      <li><a href="#reviews">Отзывы</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a class="btn btn-ghost" href="tel:+79130000000">+7 913 000-00-00</a>
+      <a class="btn btn-primary" href="#order">Заказать мёд</a>
+    </div>
+    <button class="burger" aria-label="Меню" onclick="document.querySelector('.nav-links').classList.toggle('mobile-open')">☰</button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">Семейная пасека · с 1998 года</p>
+        <h1>Мёд с пасеки,<br>которую видно <em>из окна нашего дома</em></h1>
+        <p class="lead">Держим 120 семей в предгорьях Алтая — на разнотравье, липе и таёжном сборе. Качаем, разливаем и отправляем сами, без перекупщиков между пчелой и вашей чашкой чая.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#honey">Выбрать мёд</a>
+          <a class="btn btn-ghost" href="#process">Как мы работаем</a>
+        </div>
+        <div class="hero-stats mono">
+          <div><b>120</b><span>ульев на пасеке</span></div>
+          <div><b>3</b><span>поколения пчеловодов</span></div>
+          <div><b>6</b><span>сортов мёда</span></div>
+          <div><b>1998</b><span>год основания</span></div>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="comb-field">
+          <div class="comb-cell lit"></div><div class="comb-cell"></div><div class="comb-cell lit"></div><div class="comb-cell"></div>
+          <div class="comb-cell"></div><div class="comb-cell lit"></div><div class="comb-cell"></div><div class="comb-cell lit"></div>
+          <div class="comb-cell lit"></div><div class="comb-cell"></div><div class="comb-cell"></div><div class="comb-cell lit"></div>
+          <div class="comb-cell"></div><div class="comb-cell lit"></div><div class="comb-cell lit"></div><div class="comb-cell"></div>
+        </div>
+        <svg class="honey-drip" viewBox="0 0 26 30"><path class="honey-drop" d="M13 0c4 6 8 11 8 16a8 8 0 1 1-16 0c0-5 4-10 8-16Z" fill="#E8A93A"/></svg>
+        <svg class="bee" viewBox="0 0 34 22"><ellipse cx="17" cy="11" rx="9" ry="6" fill="#F4CD79"/><path d="M9 11h16M11 7h12M11 15h12" stroke="#1B1108" stroke-width="2"/><circle cx="27" cy="10" r="2.4" fill="#1B1108"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="about">
+    <div class="wrap about-grid">
+      <div class="about-art reveal">
+        <span class="tag">Село Верх-Ая, Алтайский край</span>
+      </div>
+      <div class="about-text reveal">
+        <p class="eyebrow">О пасеке</p>
+        <h2>Дед поставил первые десять ульев в 1998-м — сейчас их сто двадцать</h2>
+        <p>Пасеку начал наш дед, Николай Петрович, когда вышел на пенсию и построил дом на краю леса. Сегодня пасекой занимаемся мы с отцом: перевозим ульи по медоносам, откачиваем мёд вручную на медогонке и разливаем его сами — в своём небольшом домике на участке.</p>
+        <p>Мы не покупаем мёд у других пасечников и не смешиваем сборы разных лет. Каждая партия — это конкретные ульи, конкретное поле и конкретное лето, которое можно назвать по году на банке.</p>
+        <div class="about-facts">
+          <div><b>Без сахарного подкорма</b><span>пчёлы зимуют на собственном мёде</span></div>
+          <div><b>Ручная откачка</b><span>без нагрева, холодным способом</span></div>
+          <div><b>Свои поля и лес</b><span>не менее 5 км до ближайшей трассы</span></div>
+          <div><b>Прямая отправка</b><span>от пасеки до вашей двери</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section id="honey" class="products">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">Наш мёд</p>
+        <h2>Шесть сортов — по тому, что цветёт в этот сезон</h2>
+        <p>Каждая банка подписана годом и медоносом. Храним мёд без нагрева — поэтому со временем он засахаривается, это нормальное свойство настоящего мёда.</p>
+      </div>
+      <div class="hive-grid">
+
+        <div class="jar reveal">
+          <div class="jar-top"><div><h3>Цветочный</h3></div><div class="jar-swatch" style="background:linear-gradient(#F4CD79,#E8A93A)"></div></div>
+          <p class="note">Разнотравье предгорий: клевер, донник, иван-чай. Мягкий, светлый, universal.</p>
+          <div class="jar-price"><b>450 ₽</b><span>банка 500 г</span></div>
+        </div>
+
+        <div class="jar reveal">
+          <div class="jar-top"><div><h3>Липовый</h3></div><div class="jar-swatch" style="background:linear-gradient(#F8E3A3,#E8A93A)"></div></div>
+          <p class="note">С майского цветения липы. Тонкая ментоловая нота, любим при простуде.</p>
+          <div class="jar-price"><b>600 ₽</b><span>банка 500 г</span></div>
+        </div>
+
+        <div class="jar reveal">
+          <div class="jar-top"><div><h3>Гречишный</h3></div><div class="jar-swatch" style="background:linear-gradient(#8B4A1E,#4B2A12)"></div></div>
+          <p class="note">Тёмный, терпкий, с горчинкой. Богат железом, хорош к оладьям.</p>
+          <div class="jar-price"><b>500 ₽</b><span>банка 500 г</span></div>
+        </div>
+
+        <div class="jar reveal">
+          <div class="jar-top"><div><h3>Таёжный</h3></div><div class="jar-swatch" style="background:linear-gradient(#D98A3D,#8B4A1E)"></div></div>
+          <p class="note">Кипрей и малина из лесной зоны. Густой, с ягодным послевкусием.</p>
+          <div class="jar-price"><b>650 ₽</b><span>банка 500 г</span></div>
+        </div>
+
+        <div class="jar reveal">
+          <div class="jar-top"><div><h3>Мёд в сотах</h3></div><div class="jar-swatch" style="background:linear-gradient(#E8A93A,#C97A1E)"></div></div>
+          <p class="note">Целая рамка, срезанная и упакованная в день откачки. Едят с воском.</p>
+          <div class="jar-price"><b>700 ₽</b><span>рамка ~600 г</span></div>
+        </div>
+
+        <div class="jar reveal">
+          <div class="jar-top"><div><h3>Прополис</h3></div><div class="jar-swatch" style="background:linear-gradient(#6E3B15,#2A1408)"></div></div>
+          <p class="note">Настойка на спирту, 20%. Собирается вручную с рамок весной.</p>
+          <div class="jar-price"><b>350 ₽</b><span>флакон 50 мл</span></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS / CYCLE -->
+  <section id="process" class="cycle">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">Пасечный год</p>
+        <h2>От первого облёта до зимнего покоя</h2>
+        <p>Мёд, который вы получаете, — итог годового цикла, а не одной откачки. Вот как выглядит год на нашей пасеке.</p>
+      </div>
+      <div class="cycle-track reveal">
+        <div class="cycle-stage">
+          <span class="when">Апрель</span>
+          <h3>Облёт и ревизия</h3>
+          <p>Осматриваем каждую семью после зимы, проверяем матку и запасы, слабые семьи подсиливаем.</p>
+        </div>
+        <div class="cycle-stage">
+          <span class="when">Июнь — июль</span>
+          <h3>Главный медосбор</h3>
+          <p>Перевозим ульи к разнотравью и липе, ставим магазинные надставки, следим за роением.</p>
+        </div>
+        <div class="cycle-stage">
+          <span class="when">Август</span>
+          <h3>Откачка и созревание</h3>
+          <p>Качаем мёд на ручной медогонке, даём отстояться и снимаем пену, потом разливаем по банкам.</p>
+        </div>
+        <div class="cycle-stage">
+          <span class="when">Сентябрь — март</span>
+          <h3>Зимовка пасеки</h3>
+          <p>Утепляем ульи, оставляем пчёлам собственный мёд на зиму, готовим рамки к следующему сезону.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="reviews" class="reviews">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">Отзывы</p>
+        <h2>Что говорят те, кто уже попробовал</h2>
+      </div>
+      <div class="review-grid">
+        <div class="review reveal">
+          <p>«Брали липовый мёд ещё в позапрошлом году — до сих пор берём только здесь. Не засахаривается странно, вкус каждый год чуть разный, но всегда настоящий».</p>
+          <div class="who">Марина К.</div>
+          <div class="where">Новосибирск</div>
+        </div>
+        <div class="review reveal">
+          <p>«Заказывал мёд в сотах на подарок родителям — приехал аккуратно упакованным, без единой протечки. Родители теперь просят ещё».</p>
+          <div class="who">Артём С.</div>
+          <div class="where">Барнаул</div>
+        </div>
+        <div class="review reveal">
+          <p>«Гречишный мёд с горчинкой — то, что искала после переезда в город, где такой не продают. Заказываю раз в сезон сразу на всю семью».</p>
+          <div class="who">Ольга Р.</div>
+          <div class="where">Кемерово</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORDER -->
+  <section id="order" class="order">
+    <div class="wrap order-grid">
+      <div class="reveal">
+        <p class="eyebrow">Доставка и оплата</p>
+        <h2 style="font-size:clamp(1.6rem,2.4vw,2rem); margin:14px 0 10px;">Отправляем по всей стране</h2>
+        <ul class="delivery-list">
+          <li><b>СДЭК и Почта России</b> — по всей России, 3–7 дней, бережная упаковка от протечек.</li>
+          <li><b>Самовывоз</b> — с пасеки в селе Верх-Ая или при встрече в Барнауле по договорённости.</li>
+          <li><b>Оплата</b> — картой при заказе или наличными при самовывозе.</li>
+          <li><b>Оптом</b> — от 10 кг действует отдельная цена, пишите в форму.</li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <form id="order-form">
+          <div class="form-row">
+            <div>
+              <label for="f-name">Имя</label>
+              <input id="f-name" type="text" required placeholder="Как к вам обращаться">
+            </div>
+            <div>
+              <label for="f-phone">Телефон</label>
+              <input id="f-phone" type="tel" required placeholder="+7 ___ ___-__-__">
+            </div>
+          </div>
+          <div>
+            <label for="f-type">Какой мёд интересует</label>
+            <select id="f-type">
+              <option>Цветочный</option>
+              <option>Липовый</option>
+              <option>Гречишный</option>
+              <option>Таёжный</option>
+              <option>Мёд в сотах</option>
+              <option>Прополис</option>
+              <option>Ещё не решил(а)</option>
+            </select>
+          </div>
+          <div>
+            <label for="f-msg">Комментарий</label>
+            <textarea id="f-msg" placeholder="Сколько банок, куда отправить, есть ли пожелания"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Отправить заявку</button>
+          <p class="form-msg" id="form-msg"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <h4>Тихий улей</h4>
+        <p>Семейная пасека в предгорьях Алтая. 120 ульев, шесть сортов мёда, прямая отправка от пасечника к вам.</p>
+      </div>
+      <div class="flinks">
+        <h4>Контакты</h4>
+        <a href="tel:+79130000000">+7 913 000-00-00</a>
+        <a href="mailto:paseka.tihiy.uley@example.com">paseka.tihiy.uley@example.com</a>
+        <span>с. Верх-Ая, Алтайский край</span>
+      </div>
+      <div class="flinks">
+        <h4>Соцсети</h4>
+        <a href="#">ВКонтакте</a>
+        <a href="#">Telegram</a>
+        <a href="#">Instagram*</a>
+        <span style="font-size:12px;">*принадлежит компании Meta, признанной экстремистской и запрещённой в РФ</span>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Пасека «Тихий Улей». Все права защищены.</span>
+      <span class="mono">Мёд собран честно, без спешки.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // reveal-on-scroll
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold:.15 });
+  els.forEach(el=>io.observe(el));
+
+  // mobile nav
+  const style = document.createElement('style');
+  style.textContent = `.nav-links.mobile-open{ display:flex !important; position:absolute; top:100%; left:0; right:0; flex-direction:column; background:#1B1108; padding:20px 28px; border-bottom:1px solid rgba(232,169,58,.14); gap:16px; }`;
+  document.head.appendChild(style);
+
+  // fake form submit
+  document.getElementById('order-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    const msg = document.getElementById('form-msg');
+    const name = document.getElementById('f-name').value.trim() || 'вы';
+    msg.textContent = `Спасибо! Свяжемся с ${name} в течение дня, чтобы уточнить детали заказа.`;
+    this.reset();
+  });
+</script>
+
+</body>
+</html>
